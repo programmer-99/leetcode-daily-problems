@@ -1,15 +1,25 @@
-// dailyTask.js
-console.log("This is today's LeetCode task!");
+function maxArea(height) {
+    let max = 0;
+    let left = 0;
+    let right = height.length - 1;
 
-function twoSum(nums, target) {
-    const map = new Map();
-    for (let i = 0; i < nums.length; i++) {
-        const complement = target - nums[i];
-        if (map.has(complement)) {
-            return [map.get(complement), i];
+    while (left < right) {
+        const width = right - left;
+        const minHeight = Math.min(height[left], height[right]);
+        const area = width * minHeight;
+        max = Math.max(max, area);
+
+        // Move the smaller height pointer
+        if (height[left] < height[right]) {
+            left++;
+        } else {
+            right--;
         }
-        map.set(nums[i], i);
     }
+
+    return max;
 }
 
-console.log(twoSum([2, 7, 11, 15], 9)); // Output: [0, 1]
+// Test Cases
+console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7])); // Output: 49
+console.log(maxArea([1, 1]));                     // Output: 1
